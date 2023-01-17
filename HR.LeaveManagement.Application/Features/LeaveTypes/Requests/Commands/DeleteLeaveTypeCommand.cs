@@ -1,10 +1,12 @@
-﻿using System;
+﻿using MediatR;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace HR.LeaveManagement.Application.Features.LeaveTypes.Requests.Commands
 {
-    internal class DeleteLeaveTypeCommand
+    public class DeleteLeaveTypeCommand :IRequest
     {
+        public int Id { get; set; }
     }
 }
