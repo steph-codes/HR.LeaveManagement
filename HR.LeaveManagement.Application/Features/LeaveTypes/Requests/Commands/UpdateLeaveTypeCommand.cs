@@ -4,7 +4,7 @@ using System.Text;
 
 namespace HR.LeaveManagement.Application.Features.LeaveTypes.Requests.Commands
 {
-    internal class DeleteLeaveTypeCommandHandler
+    internal class UpdateLeaveTypeCommand
     {
     }
 }
