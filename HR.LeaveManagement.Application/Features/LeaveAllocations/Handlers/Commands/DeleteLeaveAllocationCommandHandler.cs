@@ -8,23 +8,23 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace HR.LeaveManagement.Application.Features.LeaveRequests.Handlers.Commands
+namespace HR.LeaveManagement.Application.Features.LeaveAllocations.Handlers.Commands
 {
     public class DeleteLeaveAllocationCommandHandler : IRequestHandler<DeleteLeaveAllocationCommand>
     {
         private readonly IMapper _mapper;
-        private readonly ILeaveRequestRepository _leaveRequestRepository;
+        private readonly ILeaveAllocationRepository _leaveAllocationRepository;
 
-        public DeleteLeaveAllocationCommandHandler(IMapper mapper, ILeaveRequestRepository leaveRequestRepository)
+        public DeleteLeaveAllocationCommandHandler(ILeaveAllocationRepository leaveAllocationRepository, IMapper mapper)
         {
             _mapper = mapper;
-            _leaveRequestRepository = leaveRequestRepository;
+            _leaveAllocationRepository = leaveAllocationRepository;
         }
-       
+
         public async Task<Unit> Handle(DeleteLeaveAllocationCommand request, CancellationToken cancellationToken)
         {
-            var leaveRequest = await _leaveRequestRepository.Get(request.Id);
-            await _leaveRequestRepository.Delete(leaveRequest);
+            var leaveAllocation = await _leaveAllocationRepository.Get(request.Id);
+            await _leaveAllocationRepository.Delete(leaveAllocation);
             return Unit.Value;
         }
     }
