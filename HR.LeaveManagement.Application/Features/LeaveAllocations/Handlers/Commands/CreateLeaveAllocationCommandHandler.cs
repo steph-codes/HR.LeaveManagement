@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using HR.LeaveManagement.Application.DTOs.LeaveAllocation.Validators;
 using HR.LeaveManagement.Application.Features.LeaveAllocations.Requests.Commands;
 using HR.LeaveManagement.Application.Features.LeaveTypes.Requests.Commands;
 using HR.LeaveManagement.Application.Persistence.Contracts;
@@ -17,18 +18,27 @@ namespace HR.LeaveManagement.Application.Features.LeaveAllocations.Handlers.Comm
         //private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly ILeaveAllocationRepository _leaveAllocationRepository;
+        private readonly ILeaveTypeRepository _leaveTypeRepository;
 
-        public CreateLeaveAllocationCommandHandler(ILeaveAllocationRepository leaveAllocationRepository, IMapper mapper)
+        public CreateLeaveAllocationCommandHandler(ILeaveAllocationRepository leaveAllocationRepository, ILeaveTypeRepository leaveTypeRepository, IMapper mapper)
         {
             _mapper = mapper;
             _leaveAllocationRepository = leaveAllocationRepository;
+            _leaveTypeRepository = leaveTypeRepository;
         }
         public async Task<int> Handle(CreateLeaveAllocationCommand request, CancellationToken cancellationToken)
-        {
-            var leaveAllocation = _mapper.Map<LeaveAllocation>(request.LeaveAllocationDto);
+        {   
+            var validator = new CreateLeaveAllocationDtoValidator(_leaveTypeRepository);
+            var validationResult = await validator.ValidateAsync(request.CreateLeaveAllocationDto);
+
+            if (validationResult.IsValid == false)
+                throw new Exception();
+
+            var leaveAllocation = _mapper.Map<LeaveAllocation>(request.CreateLeaveAllocationDto);
             leaveAllocation = await _leaveAllocationRepository.Add(leaveAllocation);
 
             return leaveAllocation.Id;
         }
+
     }
 }
