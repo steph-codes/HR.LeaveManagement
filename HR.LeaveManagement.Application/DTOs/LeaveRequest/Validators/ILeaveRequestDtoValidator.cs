@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 using HR.LeaveManagement.Application.DTOs.LeaveRequest;
-using HR.LeaveManagement.Application.Persistence.Contracts;
+using HR.LeaveManagement.Application.Contracts.Persistence;
 using System;
 using System.Collections.Generic;
 using System.Text;
