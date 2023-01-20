@@ -4,7 +4,7 @@ using System.Text;
 
 namespace HR.LeaveManagement.Application.DTOs.LeaveAllocation
 {
-    public class CreateLeaveAllocationDto : UpdateLeaveAllocationDto
+    public class CreateLeaveAllocationDto : ILeaveAllocationDto
     {
         public  int NumberOfDays { get; set; }
         public int LeaveTypeId { get; set; }

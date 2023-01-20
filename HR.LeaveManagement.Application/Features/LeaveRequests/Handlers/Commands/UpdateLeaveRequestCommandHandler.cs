@@ -30,14 +30,13 @@ namespace HR.LeaveManagement.Application.Features.LeaveRequests.Handlers.Command
 
             var leaveRequest = await _leaveRequestRepository.Get(request.Id);
 
+            //check validation for each of fthe properties in the UpdateleaveRequestCommand
+
             if (request.LeaveRequestDto != null)
             {
-                
-
                 _mapper.Map(request.LeaveRequestDto, leaveRequest);
 
                 await _leaveRequestRepository.Update(leaveRequest);
-
             }
 
             else if(request.ChangeLeaveRequestApprovalDto != null)

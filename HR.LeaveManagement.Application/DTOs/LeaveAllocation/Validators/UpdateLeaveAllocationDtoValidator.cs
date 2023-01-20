@@ -14,22 +14,9 @@ namespace HR.LeaveManagement.Application.DTOs.LeaveAllocation.Validators
         {
             _leaveTypeRepository = leaveTypeRepository;
 
-            RuleFor(p => p.NumberOfDays)
-                .NotEmpty().WithMessage("{PropertyName} is required.")
-                .GreaterThan(0).WithMessage("{PropertyName} must be at Least 1. ")
-                .LessThan(30).WithMessage("{PropertyName} must be less than 30. ");
+            Include(new ILeaveAllocationDtoValidator(_leaveTypeRepository));
 
-            RuleFor(p => p.LeaveTypeId)
-                .GreaterThan(0)
-                .MustAsync(async (Id, token) =>
-                {
-                    var leaveTypeExists = await _leaveTypeRepository.Exists(Id);
-                    return leaveTypeExists;
-                }).WithMessage("{PropertyName} does not exist. ");
-
-            RuleFor(p => p.Period)
-                .NotEmpty().WithMessage("{PropertyName} is required.")
-                .GreaterThan(0).WithMessage("{PropertyName} must be at Least 1. ");
+            RuleFor(p => p.Id).NotNull().WithMessage("{PropertyName} must be present");
 
         }
     }

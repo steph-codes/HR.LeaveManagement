@@ -9,15 +9,8 @@ namespace HR.LeaveManagement.Application.DTOs.LeaveType.Validators
     {
         public CreateLeaveTypeDtoValidator()
         {
-            RuleFor(p => p.Name)
-                .NotEmpty().WithMessage("{PropertyName} is required.")
-                .NotNull()
-                .MaximumLength(50).WithMessage("{PropertyName} must not exceed {ComparisonValue} characters.");
-
-            RuleFor(p => p.DefaultDays)
-                .NotEmpty().WithMessage("{PropertyName} is required.")
-                .GreaterThan(0).WithMessage("{PropertyName} must be at Least 1. ")
-                .LessThan(100).WithMessage("{PropertyName} must be less than {ComparisonValue}. ");
+            //include or inherits rules from ILeaveTypeValidators , Also you can add Custom Rules too
+            Include(new ILeaveTypeDtoValidator());
         }
     }
 }
