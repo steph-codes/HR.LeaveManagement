@@ -5,6 +5,7 @@ using SendGrid;
 using SendGrid.Helpers.Mail;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,8 +14,6 @@ namespace HR.LeaveManagement.Infrastructure.Mail
     public class EmailSender : IEmailSender
     {
         private EmailSettings _emailSettings { get; }
-
-        //IOptions does the same as IConfiguration they give access to the appsettings file in the case it fetches EmailSettings json object from appsettings.json
         public EmailSender(IOptions<EmailSettings> emailSettings)
         {
             _emailSettings = emailSettings.Value;
@@ -24,7 +23,7 @@ namespace HR.LeaveManagement.Infrastructure.Mail
         {
             var client = new SendGridClient(_emailSettings.ApiKey);
             var to = new EmailAddress(email.To);
-            var from = new EmailAddress()
+            var from = new EmailAddress
             {
                 Email = _emailSettings.FromAddress,
                 Name = _emailSettings.FromName
@@ -35,5 +34,5 @@ namespace HR.LeaveManagement.Infrastructure.Mail
 
             return response.StatusCode == System.Net.HttpStatusCode.OK || response.StatusCode == System.Net.HttpStatusCode.Accepted;
         }
-    }   
+    }
 }

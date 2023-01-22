@@ -9,9 +9,9 @@ using System.Text;
 
 namespace HR.LeaveManagement.Persistence
 {
-    public static class PersistenceServiceRegistration
+    public static class PersistenceServicesRegistration
     {
-        public static IServiceCollection ConfigureServices(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection ConfigurePersistenceServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<LeaveManagementDbContext>(options =>
                 options.UseSqlServer(
